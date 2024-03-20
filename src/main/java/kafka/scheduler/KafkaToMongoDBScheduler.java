@@ -76,7 +76,7 @@ public class KafkaToMongoDBScheduler {
     private MongoTemplate mongoTemplate;
 
 
-    @Scheduled(fixedDelay = 60000) // 5 minutes
+    @Scheduled(fixedDelay = 600000) // 10 minutes
     public void fetchAndSaveMessages() {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -86,7 +86,7 @@ public class KafkaToMongoDBScheduler {
         kafkaConsumer.subscribe(Collections.singletonList("input2"));
         kafkaConsumer.seekToBeginning(kafkaConsumer.assignment());
 
-        ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(10000));
+        ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(10000)); // read the data from kafka topic till 10 sec
 
 
         records.forEach(record -> {
